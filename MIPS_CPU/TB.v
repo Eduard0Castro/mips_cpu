@@ -11,7 +11,7 @@ module TB();
 	wire[31:0] ADDR_Prog;
 	wire CS;
 	wire CS_P;
-	wire WR_RD;
+	wire WE;
 	
 	reg CLK_MUL;
 	reg CLK_SYS;
@@ -27,7 +27,7 @@ module TB();
 		.Prog_BUS_READ(Prog_BUS_READ),
 		.CS(CS),
 		.CS_P(CS_P),
-		.WR_RD(WR_RD)
+		.WE(WE)
 	);
 
 	initial begin
