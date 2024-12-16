@@ -9,18 +9,20 @@ module alu
 );
 	
 
-	always @ (*) begin
-		case(load)
-			2'b00: out <= a + b; // Soma
-			2'b01:
-				begin
-					out <= a - b; // Sub
-					if (out == 0) zeroflag = 1;
-				end
-			2'b10: out <= a & b; // AND
-			2'b11: out <= a | b; // OR
-			default: out <= 32'd0;
-		endcase			
-	end
+always @ (*) begin
+	zeroflag = 0;
+	case(load)
+		2'b00: out <= a + b; // Soma
+		2'b01:
+			begin
+				out <= a - b; // Sub
+				if (out == 0) zeroflag = 1;
+			end
+		2'b10: out <= a & b; // AND
+		2'b11: out <= a | b; // OR
+		default: 
+				out <= 32'd0;
+	endcase			
+end
 
 endmodule 
