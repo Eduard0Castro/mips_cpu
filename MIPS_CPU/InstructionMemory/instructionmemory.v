@@ -12,7 +12,7 @@ module instructionmemory
 	// início offsset -> 22B0h
 	// última posição de memória -> 26AFh
 	// primeiro endereco de memory de instrucoes -> 31B0h
-	// ultimo endereco de memory de instrucoes -> 35AFh
+	// último endereco de memory de instrucoes -> 35AFh
 	
 	parameter r0 = 5'd0;
 	parameter r1 = 5'd1;
@@ -48,27 +48,27 @@ module instructionmemory
 
 			//Codigo com outras instruções:
 
-			memory[10'h31BC] = {n2, r0, r1, add_a};          // R1 <- A (LW)
-			memory[10'h31C0] = {n2, r0, r2, add_b};          // R2 <- B (LW)
-			memory[10'h31C4] = {n2, r0, r3, add_c};          // R3 <- C (LW)
-			memory[10'h31C8] = {n2, r0, r4, add_d};          // R4 <- D (LW)
+		memory[0] = {n2, r0, r1, add_a};          // R1 <- A (LW) 
+		memory[1] = {n2, r0, r2, add_b};          // R2 <- B (LW)
+		memory[2] = {n2, r0, r3, add_c};          // R3 <- C (LW)
+		memory[3] = {n2, r0, r4, add_d};          // R4 <- D (LW)
 
-			memory[10'h31CC] = 32'd0;
-			memory[10'h31D0] = 32'd0;
+		memory[4] = 32'd0;
+		memory[5] = 32'd0;
 
-			memory[10'h31D4] = {ng, r2, r1, r5, n10, sub};   // R5 <- (B - A) (SUB)
+		memory[6] = {ng, r2, r1, r5, n10, sub};   // R5 <- (B - A) (SUB)
 
-			memory[10'h31D8] = 32'd0;
-			memory[10'h31DC] = {ng, r3, r4, r6, n10, sub};   // R6 <- (C - D) (SUB)
-			memory[10'h31E0] = 32'd0;
-			memory[10'h31E4] = 32'd0;
-			memory[10'h31E8] = 32'd0;
-			memory[10'h31EC] = {ng, r5, r6, r7, n10, mul};   // R7 <- R5 * R6 (MUL)
-			memory[10'h31F0] = 32'd0;
-			memory[10'h31F4] = 32'd0;
-			memory[10'h31F8] = 32'd0;
-			memory[10'h31FC] = {n3, r0, r7, last_add};       // SW -> last_add
-			memory[10'h3200] = 32'd0;
+		memory[7] = 32'd0;
+		memory[8] = {ng, r3, r4, r6, n10, sub};   // R6 <- (C - D) (SUB)
+		memory[9] = 32'd0;
+		memory[10] = 32'd0;
+		memory[11] = 32'd0;
+		memory[12] = {ng, r5, r6, r7, n10, mul};   // R7 <- R5 * R6 (MUL)
+		memory[13] = 32'd0;
+		memory[14] = 32'd0;
+		memory[15] = 32'd0;
+		memory[16] = {n3, r0, r7, last_add};       // SW -> last_add
+		memory[17] = 32'd0;
 
 		
 	end
