@@ -3,21 +3,23 @@ module ADDRDecoding_Prog_TB();
 
 	wire cs_p;
 	reg clk;
-	reg [31:0] address;
+	reg [31:0] address_in;
+	wire [31:0] address_out;
 	integer i;
 	
 	ADDRDecoding_Prog DUT (
 		.cs_p(cs_p),
-		.address(address),
+		.address_in(address_in),
+		.address_out(address_out),
 		.clk(clk)
 	);
 	
 	initial begin
 		clk = 0;
-		address = 0;
+		address_in = 0;
 		
-		for(i = 32'h0200; i <= 32'h06b0; i = i + 32'h4)
-			#10 address = i;
+		for(i = 32'h31b0; i <= 32'h35af; i = i + 32'h4)
+			#10 address_in = i;
 			
 		#20 $stop;
 	end

@@ -13,10 +13,10 @@ module ADDRDecoding_Prog
 always @ (posedge clk) 
 	begin
 			
-		if((address_in >= 0) && (address_in <= 1023))
+		if((address_in >= 32'h31b0) && (address_in <= 32'h35af))
 			begin
 				cs_p <= 0;
-				address_out <= address_in + 32'h31b0;
+				address_out <= address_in - 32'h31b0;
 		
 			end
 			
