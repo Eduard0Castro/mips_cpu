@@ -1,18 +1,30 @@
 module pc(
 	input rst, 
 	input clk, 
-	output [31:0] out
+	input zeroflag, jmpFlag, branchFlag,
+	input [31:0] jmpAddress, 
+	input [31:0] branchOffset,
+	output reg [31:0] out
 );
 
-integer address = 0;
-assign out = address;
 
 always @(posedge clk)
 	begin
-		if(rst)
-			address <= 0;
+		if(rst | out >= 32'h35ac)
+			out <= 32'h31B0;
+			
+		else if (branchFlag)
+			begin
+				
+				if (!zeroflag) out <= out + 4 + branchOffset; 
+				else out <= out + 4;
+				
+			end
+			
+		else if (jmpFlag) out <= jmpAddress;
+		
 		else
-			address <= address + 4;
+			out <= out + 4;
 	end
 
 endmodule
