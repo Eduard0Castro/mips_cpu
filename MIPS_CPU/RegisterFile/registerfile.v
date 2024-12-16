@@ -9,16 +9,21 @@ module registerfile
 
 	integer i;
 	
-	reg [DATA_WIDTH-1:0] register [0:15];
+	reg [DATA_WIDTH-1:0] register [0:31];
 	
-	always @ (negedge clk) begin
-		if(rst) begin
-			for(i = 0; i < 16; i = i+1) 
-				register[i] = 32'b0;
-		end else if (we) begin
-			register[rd] <= data;
+	always @ (negedge clk) 
+		begin
+			if(rst) 
+				begin
+					for(i = 0; i < 32; i = i+1) 
+						register[i] = 32'b0;
+				end 
+				
+			else if (we) 
+				begin
+					register[rd] <= data;
+				end
 		end
-	end
 	
 	always @ (posedge clk) begin
 			a <= register[rs];
