@@ -3,7 +3,7 @@ module registerfile_TB();
 	parameter DATA_WIDTH=32;
 		
 	reg [DATA_WIDTH-1:0] data;
-	reg clk, rst, we;
+	reg clk, we;
 	reg [4:0] rs,rt,rd;
 	wire [DATA_WIDTH-1:0] a,b;
 
@@ -12,7 +12,6 @@ module registerfile_TB();
 		.data(data),  
 		.we(we), 
 		.clk(clk),
-		.rst(rst),
 		.rs(rs),
 		.rt(rt),
 		.rd(rd),
@@ -22,15 +21,12 @@ module registerfile_TB();
 
 	initial begin
 		clk = 0;
-		rst = 1;
 		we = 0;
-		rst = 1;
 		rs = 0;
 		rt = 0;
 		rd = 0;
 		
 		#20 we = 1;
-		rst = 0;
 		data = 2001;
 		rd = 1;
 		
