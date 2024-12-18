@@ -61,13 +61,14 @@ module cpu(
 	(*keep=1*)wire CLK_SYS;
 	
 	wire[31:0] inst_mem_ad;
-	wire[31:0] inst_mem_decode;
-	wire[31:0] inst_prog;
+	(*keep=1*)wire[31:0] inst_mem_decode;
+	(*keep=1*)wire[31:0] inst_prog;
+	(*keep=1*)wire[31:0] instruction;
+
 	wire[31:0] extended_inst;
 	wire[31:0] imm_out;
 	wire[31:0] ctrl;
 	wire[31:0] reg1_ctrl;
-//	wire[31:0] ctrl2_out;
 	wire[31:0] ctrl_wb;
 	wire[31:0] a_register_value;
 	wire[31:0] b_register_value;
@@ -82,7 +83,6 @@ module cpu(
 	wire[31:0] b_register_out;
 	wire[31:0] regD_write_back;
 	wire[31:0] memory_data;
-	wire[31:0] instruction;
 
 	assign ADDR = mux3_regD;
 	assign Data_BUS_WRITE = b_register_out;
@@ -91,17 +91,17 @@ module cpu(
 	assign ADDR_Prog = inst_mem_ad;
 	assign CS_P = cs_p;
 	
-	ADDRDecoding ADDR_DEC(.address(mux3_regD), 
-								 .clk(CLK_SYS), 
-								 .cs(cs),
-								 .we_ctrl(reg1_ctrl[14]), 
-								 .address_out(address_datamemory), 
-								 .we(we_datamemory));
+	ADDRDecoding ADDR_DEC(  .address(mux3_regD), 
+							.clk(CLK_SYS), 
+							.cs(cs),
+							.we_ctrl(reg1_ctrl[14]), 
+							.address_out(address_datamemory), 
+							.we(we_datamemory));
 	
 	ADDRDecoding_Prog ADDR_DEC_PROG(.address_in(inst_mem_ad), 
-											  .address_out(inst_mem_decode), 
-											  .clk(CLK_SYS), 
-											  .cs_p(cs_p));
+									.address_out(inst_mem_decode), 
+									.clk(CLK_SYS), 
+									.cs_p(cs_p));
 	
 	alu ALU(.a(a_register_out), 
 			  .b(mux2_alu), 
@@ -141,30 +141,30 @@ module cpu(
 		.Produto(product)
 	);
 	
-	mux MUX1(	.a(inst_prog), 
+	mux MUX1(.a(inst_prog), 
 				.b(Prog_BUS_READ), 
 				.sel(cs_p), 
 				.out(instruction));  //MUX Instruction Fetch
 
-	mux MUX2(	.a(b_register_out), 
+	mux MUX2(.a(b_register_out), 
 				.b(imm_out), 
 				.sel(reg1_ctrl[11]), 
-				.out(mux2_alu)); 		//MUX entrada ALU (Execute)
+				.out(mux2_alu)); 	 //MUX entrada ALU (Execute)
 
-	mux MUX3(	.a(alu_result), 
+	mux MUX3(.a(alu_result), 
 				.b(product), 
 				.sel(reg1_ctrl[12]), 
-				.out(mux3_regD)); 	//MUX result ALU e mult (Execute)
+				.out(mux3_regD)); 	 //MUX result ALU e mult (Execute)
 
-	mux MUX4(	.a(memory_data), 
+	mux MUX4(.a(memory_data), 
 				.b(Data_BUS_READ), 
 				.sel(ctrl_wb[0]), 
-				.out(mux4_mux5)); 	//Penúltimo mux datamemory e dataBUSREAD (Write Back)
+				.out(mux4_mux5)); 	 //Penúltimo mux datamemory e dataBUSREAD (Write Back)
 
-	mux MUX5(	.a(regD_write_back), 
+	mux MUX5(.a(regD_write_back), 
 				.b(mux4_mux5), 
 				.sel(ctrl_wb[10]), 
-				.out(writeBack)); 	//Mux final write back (Write Back)
+				.out(writeBack)); 	 //Mux final write back (Write Back)
 
 	
 	pc PC(.rst(reset), 
@@ -176,13 +176,12 @@ module cpu(
 			.branchOffset(imm_out),
 			.out(inst_mem_ad));
 	
-	Register CTRL1(.rst(reset), .clk(CLK_SYS), .in(ctrl), .out(reg1_ctrl));				  		//Primeiro ctrl
-	Register IMM(.rst(reset), .clk(CLK_SYS), .in(extended_inst), .out(imm_out));		  		//IMM register
-	//Register REG2(.rst(reset), .clk(CLK_SYS), .in(reg1_ctrl), .out(ctrl2_out)); 		  	//Segundo ctrl
+	Register CTRL1(.rst(reset), .clk(CLK_SYS), .in(ctrl), .out(reg1_ctrl));				   //Primeiro ctrl
+	Register IMM(.rst(reset), .clk(CLK_SYS), .in(extended_inst), .out(imm_out));		   //IMM register
 	Register CTRL2(.rst(reset), .clk(CLK_SYS), .in({reg1_ctrl[31:1], cs}), .out(ctrl_wb)); //Segundo 2 ctrl
 	Register A(.rst(reset), .clk(CLK_SYS), .in(a_register_value), .out(a_register_out));   //Registro A
-	Register B(.rst(reset), .clk(CLK_SYS), .in(b_register_value), .out(b_register_out));  	//Registro B
-	Register D(.rst(reset), .clk(CLK_SYS), .in(mux3_regD), .out(regD_write_back));  			//Registro D
+	Register B(.rst(reset), .clk(CLK_SYS), .in(b_register_value), .out(b_register_out));   //Registro B
+	Register D(.rst(reset), .clk(CLK_SYS), .in(mux3_regD), .out(regD_write_back));  	   //Registro D
 	
 	registerfile REG_FILE(
 		.data(writeBack),

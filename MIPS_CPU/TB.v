@@ -13,9 +13,9 @@ module TB();
 	wire CS_P;
 	wire WE;
 	
-	reg CLK_MUL;
+//	reg CLK_MUL;
 	reg CLK_SYS;
-	reg [31:0] writeBack;
+//	reg [31:0] writeBack;
 	reg [31:0] instruction;
 	reg [31:0] inst_prog;
 	reg [31:0] inst_mem_decode;
@@ -34,9 +34,9 @@ module TB();
 	);
 
 	initial begin
-		$init_signal_spy("/TB/DUT/CLK_MUL", "CLK_MUL", 1);
+//		$init_signal_spy("/TB/DUT/CLK_MUL", "CLK_MUL", 1);
 		$init_signal_spy("/TB/DUT/CLK_SYS", "CLK_SYS", 1);
-		$init_signal_spy("/TB/DUT/writeBack", "writeBack", 1);
+//		$init_signal_spy("/TB/DUT/writeBack", "writeBack", 1);
 		$init_signal_spy("/TB/DUT/inst_mem_decode", "inst_mem_decode", 1);
 		$init_signal_spy("/TB/DUT/inst_prog", "inst_prog", 1);
 		$init_signal_spy("/TB/DUT/instruction", "instruction", 1);
