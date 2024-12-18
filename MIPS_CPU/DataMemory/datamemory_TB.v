@@ -23,10 +23,10 @@ parameter ADDR_WIDTH = 10;
 		address = 9'b0;
 		in = 32'b0;
 		
-		#40 address = 10'h350;
-		#40 address = 10'h351;
-		#40 address = 10'h352;
-		#40 address = 10'h353;
+		#40 address = 10'h0;
+		#40 address = 10'h1;
+		#40 address = 10'h2;
+		#40 address = 10'h3;
 		
 		#20 we = 1; 
 		
