@@ -124,7 +124,11 @@ module cpu(
 	
 	extend EXTEND(.rst(reset), .clk(CLK_SYS), .data(instruction[15:0]), .out(extended_inst));
 	
-	instructionmemory INST_MEM(.address(inst_mem_decode), .clk(CLK_SYS), .out(inst_prog));
+	instructionmemory	instructionmemory_inst (
+		.address ( inst_mem_decode ),
+		.clock ( CLK_SYS ),
+		.q ( inst_prog )
+	);
 
 	multiplicador mul(
 		.St(reg1_ctrl[12]),
@@ -183,11 +187,10 @@ module cpu(
 	registerfile REG_FILE(
 		.data(writeBack),
 		.clk(CLK_SYS),
-		.rst(reset),
 		.we(ctrl_wb[13]),
 		.rs(ctrl[31:27]), 
 		.rt(ctrl[26:22]),
-		.rd(ctrl_wb[21:17]),
+		.rd(ctrl[21:17]),
 		.a(a_register_value),
 		.b(b_register_value)
 	);
