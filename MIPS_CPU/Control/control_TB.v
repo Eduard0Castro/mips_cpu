@@ -47,7 +47,11 @@ module control_TB();
 		
 		//formato J      opcode |          address
 		#50
-		instruction = 32'b000010_000000_0000_0011_0011_1010_1111;
+		instruction = 32'b000010_000000_0000_0011_0011_1010_1111; //JMP
+		
+		//Instrução NOP:
+		#50
+		instruction = 32'd0;													 //NOP
 		
 		#50 $stop;
 	end
