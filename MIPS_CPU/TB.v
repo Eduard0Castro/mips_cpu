@@ -15,10 +15,10 @@ module TB();
 	
 //	reg CLK_MUL;
 	reg CLK_SYS;
-//	reg [31:0] writeBack;
+	reg [31:0] writeBack;
 	reg [31:0] instruction;
 	reg [31:0] inst_prog;
-	reg [31:0] inst_mem_decode;
+	reg [9:0] inst_mem_decode;
 
 	cpu DUT (
 		.CLK(CLK),
@@ -36,21 +36,21 @@ module TB();
 	initial begin
 //		$init_signal_spy("/TB/DUT/CLK_MUL", "CLK_MUL", 1);
 		$init_signal_spy("/TB/DUT/CLK_SYS", "CLK_SYS", 1);
-//		$init_signal_spy("/TB/DUT/writeBack", "writeBack", 1);
 		$init_signal_spy("/TB/DUT/inst_mem_decode", "inst_mem_decode", 1);
 		$init_signal_spy("/TB/DUT/inst_prog", "inst_prog", 1);
 		$init_signal_spy("/TB/DUT/instruction", "instruction", 1);
+		$init_signal_spy("/TB/DUT/writeBack", "writeBack", 1);
 
 
 		Data_BUS_READ = 32'h22b4;
 		Prog_BUS_READ = 32'h064f;
 		CLK = 0;
 		reset = 1;
-		#100 reset = 0;
-		#175000 $stop;
+		#1000 reset = 0;
+		#60000 $stop;
 	end
 
-	always #10 CLK = ~CLK;
+	always #12 CLK = ~CLK;
 	
 //	always #280 $display(DUT.INST_MEM.out);
 	

@@ -61,7 +61,7 @@ module cpu(
 	(*keep=1*)wire CLK_SYS;
 	
 	wire[31:0] inst_mem_ad;
-	(*keep=1*)wire[31:0] inst_mem_decode;
+	(*keep=1*)wire[9:0] inst_mem_decode;
 	(*keep=1*)wire[31:0] inst_prog;
 	(*keep=1*)wire[31:0] instruction;
 
@@ -189,7 +189,7 @@ module cpu(
 		.we(ctrl_wb[13]),
 		.rs(ctrl[31:27]), 
 		.rt(ctrl[26:22]),
-		.rd(ctrl[21:17]),
+		.rd(ctrl_wb[21:17]),
 		.a(a_register_value),
 		.b(b_register_value)
 	);
