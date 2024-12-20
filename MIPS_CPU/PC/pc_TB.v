@@ -30,15 +30,15 @@ initial
 		branchOffset = -12;
 		
 		
-		#50 rst = 0;
+		#28 rst = 0;
 		#45 branchFlag = 1;
 		#10 branchFlag = 0;
-		#10 jmpFlag = 1;
+		#15 jmpFlag = 1;
 		#10 jmpFlag = 0;
 		
 		#100 $stop;
 	end
 
-always #5 clk = ~clk;
+always #7 clk = ~clk;
 
 endmodule

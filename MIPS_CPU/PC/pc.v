@@ -10,8 +10,8 @@ module pc(
 
 always @(posedge clk)
 	begin
-		if(rst | out >= 32'h35ac)
-			out <= 32'h31B0;
+		if(rst)
+			out <= 0;
 			
 		else if (branchFlag)
 			begin

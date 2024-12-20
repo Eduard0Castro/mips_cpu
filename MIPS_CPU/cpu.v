@@ -11,12 +11,12 @@
 	b) Uma instrução a cada 5 pulsos de clock 32bits/5*CLK_SYS.
 	
 	c) - FPGA:  Cyclone IV GX EP4CGX150DF31I7AD
-		- Máxima Frequência do Multiplicador: 179.79 MHz.(Slow 1200mV 100C Model)
-		- Máxima Frequência do Sistema: 46.25 MHz. (Slow 1200mV 100C Model)
+		- Máxima Frequência do Multiplicador: 159.8 MHz.(Slow 1200mV 100C Model)
+		- Máxima Frequência do Sistema: 64.11 MHz. (Slow 1200mV 100C Model)
 	
 	d) - FPGA:  Cyclone IV GX EP4CGX150DF31I7AD
 		- Máxima Frequência do Sistema = Frequência Multiplicador / 34
-			Máxima Frequência do Sistema = (178.79 MHz/34)(Slow 1200mV 100C Model) = 5.26 MHz   
+			Máxima Frequência do Sistema = (159.8 MHz/34)(Slow 1200mV 100C Model) = 4.7 MHz   
 	
 	e) Provavelmente não haverá problemas de metaestabilidade, porque, como as frequencias de clock dos dois
 		circuitos são múltiplas, o controle de fase executado pela PLL já consegue inibir essa situação. 
@@ -67,11 +67,12 @@ module cpu(
 
 	wire[31:0] extended_inst;
 	wire[31:0] imm_out;
-	wire[31:0] ctrl;
-	wire[31:0] reg1_ctrl;
-	wire[31:0] ctrl_wb;
-	wire[31:0] a_register_value;
-	wire[31:0] b_register_value;
+	(*keep=1*)wire[31:0] ctrl;
+	(*keep=1*)wire[31:0] reg1_ctrl;
+	(*keep=1*)wire[31:0] ctrl_inter;
+	(*keep=1*)wire[31:0] ctrl_wb;
+	(*keep=1*)wire[31:0] a_register_value;
+	(*keep=1*)wire[31:0] b_register_value;
 	wire[31:0] mux2_alu;
 	wire[31:0] MUX5_INST;
 	wire[31:0] mux4_mux5;
@@ -178,7 +179,8 @@ module cpu(
 	
 	Register CTRL1(.rst(reset), .clk(CLK_SYS), .in(ctrl), .out(reg1_ctrl));				   //Primeiro ctrl
 	Register IMM(.rst(reset), .clk(CLK_SYS), .in(extended_inst), .out(imm_out));		   //IMM register
-	Register CTRL2(.rst(reset), .clk(CLK_SYS), .in({reg1_ctrl[31:1], cs}), .out(ctrl_wb)); //Segundo 2 ctrl
+	Register CTRL_inter(.rst(reset), .clk(CLK_SYS), .in(reg1_ctrl), .out(ctrl_inter)); //Segundo 2 ctrl
+	Register CTRL2(.rst(reset), .clk(CLK_SYS), .in({ctrl_inter[31:1], cs}), .out(ctrl_wb)); //Terceiro ctrl
 	Register A(.rst(reset), .clk(CLK_SYS), .in(a_register_value), .out(a_register_out));   //Registro A
 	Register B(.rst(reset), .clk(CLK_SYS), .in(b_register_value), .out(b_register_out));   //Registro B
 	Register D(.rst(reset), .clk(CLK_SYS), .in(mux3_regD), .out(regD_write_back));  	   //Registro D

@@ -19,7 +19,7 @@ module instructionmemory_TB();
 		clk = 0;
 		address = 10'b0;	
 		
-		for (k = 0; k < 40; k = k + 4) 
+		for (k = 0; k < 40; k = k + 1) 
 			#100 address = k;
 			
 		#200 $stop;

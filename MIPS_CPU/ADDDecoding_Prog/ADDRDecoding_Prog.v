@@ -3,7 +3,7 @@ module ADDRDecoding_Prog
 	input [31:0] address_in, 
 	input clk,
 	output reg cs_p,
-	output reg [31:0] address_out
+	output reg [9:0] address_out
 );
 
 	// Grupo 15
@@ -12,7 +12,7 @@ module ADDRDecoding_Prog
 	
 always @ (posedge clk) 
 	begin
-			
+	
 		if((address_in >= 32'h31b0) && (address_in <= 32'h35af))
 			begin
 				cs_p <= 0;

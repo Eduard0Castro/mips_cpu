@@ -4,7 +4,7 @@ module ADDRDecoding_Prog_TB();
 	wire cs_p;
 	reg clk;
 	reg [31:0] address_in;
-	wire [31:0] address_out;
+	wire [9:0] address_out;
 	integer i;
 	
 	ADDRDecoding_Prog DUT (

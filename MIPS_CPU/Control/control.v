@@ -64,6 +64,7 @@ always @ (instruction)
 				begin
 					rd = rt;
 					sel_mux2 = 1;
+					we_registerfile = 1;
 				end
 				
 			32'd51: //ORI
@@ -71,6 +72,7 @@ always @ (instruction)
 					rd = rt;
 					load = 2'b11;
 					sel_mux2 = 1;
+					we_registerfile = 1;
 				end
 				
 				
