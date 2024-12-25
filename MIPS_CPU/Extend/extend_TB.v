@@ -2,25 +2,26 @@
 module extend_TB ();
 
 	reg [15:0] data;
-	reg clk;
-	reg en;
+	reg clk, rst;
 	wire [31:0] out;
 	
 	extend DUT (
 		.data(data),
 		.clk(clk),
-		.out(out),
-		.en(en)
+		.rst(rst),
+		.out(out)
 	);
 	
 	initial begin
+		rst = 1;
 		clk = 0;
-		en = 0;		
-		data = 16'b1111111111111111;
-		#100 en = 1;
+		data = -2;
+		
+		#10 rst = 0;
+		#45 data = 3;
 		
 		#100 $stop;
 	end
 	
-	always #50 clk = ~clk;
+	always #10 clk = ~clk;
 endmodule
