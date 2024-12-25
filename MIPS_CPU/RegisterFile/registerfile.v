@@ -6,8 +6,6 @@ module registerfile
 	input [ADDR_WIDTH - 1:0] rs,rt,rd,
 	output reg [DATA_WIDTH-1:0] a,b
 );
-
-	integer i;
 	
 	reg [DATA_WIDTH-1:0] register [0:(1 << ADDR_WIDTH) - 1];
 	
@@ -17,9 +15,15 @@ module registerfile
 		begin
 				
 			if (we && (rd != 0)) register[rd] <= data;
-				
-			a <= register[rs];
-			b <= register[rt];
+			
+			if (rd == rt) b <= data; 
+			else if (rd == rs) a <= data;
+			else
+				begin			
+					a <= register[rs];
+					b <= register[rt];
+		
+				end
 		end
 
 endmodule

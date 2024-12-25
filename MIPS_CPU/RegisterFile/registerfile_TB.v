@@ -28,19 +28,19 @@ module registerfile_TB();
 		
 		#20 we = 1;
 		data = 2001;
-		rd = 1;
+		rd = 31;
 		
 		#40 data = 4001;
 		rd = 2;
-		rs = 1;
+		rs = 31;
 		
 		#40 data = 5001;
-		rd = 6;
+		rd = 30;
 		rt = 2;
 		
 		#40 data = 3001;
 		rd = 8;
-		rs = 6;		
+		rs = 30;		
 		
 		#40 
 		rt = 8;
@@ -66,6 +66,6 @@ module registerfile_TB();
 		#40 $stop; 
 	end
 
-	always #5 clk = ~clk;
+	always #10 clk = ~clk;
 
 endmodule 
