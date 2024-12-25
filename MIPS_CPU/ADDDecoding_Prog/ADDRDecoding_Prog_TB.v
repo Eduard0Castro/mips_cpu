@@ -19,10 +19,10 @@ module ADDRDecoding_Prog_TB();
 		address_in = 0;
 		
 		for(i = 32'h31b0; i <= 32'h35af; i = i + 32'h4)
-			#10 address_in = i;
+			#20 address_in = i;
 			
 		#20 $stop;
 	end
 	
-	always #5 clk = ~clk;
+	always #10 clk = ~clk;
 endmodule 
