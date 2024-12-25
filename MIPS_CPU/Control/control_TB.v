@@ -29,6 +29,12 @@ module control_TB();
 		instruction = 32'b110001_00001_00010_0000_0000_0000_1000; //BNE
 		
 		#50
+		instruction = 32'b110011_00000_11110_0000_0000_0010_0000; //ORI
+		
+		#50
+		instruction = 32'b110010_00000_11111_0000_0000_0010_0000; //ADDI
+		
+		#50
 		//formato R		 opcode  | rs  |  rt | rd  |     op
 		instruction = 32'b011001_00001_00010_00011_01010_110010; //MUL
 		
