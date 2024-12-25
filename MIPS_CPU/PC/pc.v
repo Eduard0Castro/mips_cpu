@@ -11,17 +11,17 @@ module pc(
 always @(posedge clk)
 	begin
 		if(rst)
-			out <= 0;
+			out <= 32'h31b0;
 			
 		else if (branchFlag)
 			begin
 				
-				if (!zeroflag) out <= out + 4 + branchOffset; 
+				if (!zeroflag) out <= out + 4 + branchOffset + 32'h31b0; 
 				else out <= out + 4;
 				
 			end
 			
-		else if (jmpFlag) out <= jmpAddress;
+		else if (jmpFlag) out <= jmpAddress + 32'h31b0;
 		
 		else
 			out <= out + 4;
